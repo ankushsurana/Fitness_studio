@@ -1,4 +1,3 @@
-
 import uvicorn
 import logging
 import os
@@ -14,9 +13,7 @@ from app.config.settings import get_settings
 
 def setup_environment():
     settings = get_settings()
-    
-    # Setup logging
-    setup_logging(
+        setup_logging(
         level=settings.LOG_LEVEL,
         log_file=settings.LOG_FILE,
         enable_colors=True
@@ -47,7 +44,6 @@ def main():
         logger.info(f"Starting server on {host}:{port}")
         logger.info(f"Reload: {reload}, Workers: {workers}")
         
-        # Configure uvicorn
         config = {
             "app": "app.main:app",
             "host": host,
@@ -57,11 +53,9 @@ def main():
             "access_log": True,
         }
         
-        # Add workers only in production (not with reload)
         if not reload and workers > 1:
             config["workers"] = workers
         
-        # Run the server
         uvicorn.run(**config)
         
     except KeyboardInterrupt:

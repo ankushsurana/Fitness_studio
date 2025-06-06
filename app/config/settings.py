@@ -7,14 +7,14 @@ import pytz
 
 class Settings:    
     MONGO_URL: str = os.getenv("MONGO_URL", "mongodb+srv://ankush:ankush@fitness.ifansw0.mongodb.net/?retryWrites=true&w=majority&appName=Fitness")
-    MONGO_DB_NAME: str = os.getenv("MONGO_DB_NAME", "Fitness") # Added database name setting
+    MONGO_DB_NAME: str = os.getenv("MONGO_DB_NAME", "Fitness")
     
     BOOKING_ADVANCE_HOURS: int = int(os.getenv("BOOKING_ADVANCE_HOURS", "1"))
     MIN_CLASS_DURATION: int = int(os.getenv("MIN_CLASS_DURATION", "15"))
     MAX_CLASS_DURATION: int = int(os.getenv("MAX_CLASS_DURATION", "180"))
     MAX_CLASS_CAPACITY: int = int(os.getenv("MAX_CLASS_CAPACITY", "50"))
     
-    DEFAULT_TIMEZONE: str = "Asia/Kolkata"  # IST
+    DEFAULT_TIMEZONE: str = "Asia/Kolkata"
     VALID_TIMEZONES: List[str] = [
         'UTC', 'Asia/Kolkata', 'US/Pacific', 'US/Eastern', 'US/Central', 'US/Mountain',
         'Europe/London', 'Europe/Paris', 'Asia/Tokyo', 'Asia/Shanghai',

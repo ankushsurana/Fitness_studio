@@ -59,7 +59,6 @@ def booking_to_response(booking) -> BookingResponse:
         instructor=booking.instructor
     )
 
-# Changed from /bookings to /book to match requirements
 @router.post("/book", response_model=BookingResponse)
 async def create_booking(booking_request: BookingRequest):
     try:
@@ -101,7 +100,7 @@ async def get_bookings(
         logger.info(f"Retrieving bookings for email: {email}")
         
         bookings = booking_service.get_bookings_by_email(
-            client_email=str(email),  # Convert EmailStr to string
+            client_email=str(email),
             include_cancelled=include_cancelled
         )
         booking_responses = [booking_to_response(booking) for booking in bookings]
@@ -165,7 +164,7 @@ async def cancel_booking(booking_id: str = Path(..., description="Booking ID")):
         logger.error(f"Unexpected error cancelling booking: {e}")
         raise HTTPException(status_code=500, detail="An unexpected error occurred")
 
-@router.get("/bookings-stats", response_model=BookingStatsResponse)  # Changed route to avoid conflict
+@router.get("/bookings-stats", response_model=BookingStatsResponse)
 async def get_booking_stats():
     try:
         logger.info("Retrieving booking statistics")

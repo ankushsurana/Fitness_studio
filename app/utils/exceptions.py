@@ -1,9 +1,6 @@
-
 from typing import Optional, Dict, Any
 
-class BookingError(Exception):
-    """Base exception for booking-related errors"""
-    
+class BookingError(Exception):    
     def __init__(
         self,
         message: str,
@@ -18,9 +15,7 @@ class BookingError(Exception):
         super().__init__(self.message)
 
 
-class ValidationError(BookingError):
-    """Exception for validation errors"""
-    
+class ValidationError(BookingError):    
     def __init__(
         self,
         message: str,
@@ -34,9 +29,7 @@ class ValidationError(BookingError):
         )
 
 
-class ClassNotFoundError(BookingError):
-    """Exception when class is not found"""
-    
+class ClassNotFoundError(BookingError):    
     def __init__(self, class_id: int):
         super().__init__(
             message=f"Class with ID {class_id} not found",
@@ -46,9 +39,7 @@ class ClassNotFoundError(BookingError):
         )
 
 
-class DuplicateBookingError(BookingError):
-    """Exception when trying to book the same class twice"""
-    
+class DuplicateBookingError(BookingError):    
     def __init__(self, class_id: int, client_email: str):
         super().__init__(
             message=f"Client {client_email} has already booked this class",
@@ -61,9 +52,7 @@ class DuplicateBookingError(BookingError):
         )
 
 
-class PastClassBookingError(BookingError):
-    """Exception when trying to book a past class"""
-    
+class PastClassBookingError(BookingError):    
     def __init__(self, class_id: int, class_name: str, class_datetime: str):
         super().__init__(
             message=f"Cannot book past class '{class_name}' scheduled for {class_datetime}",
@@ -77,9 +66,7 @@ class PastClassBookingError(BookingError):
         )
 
 
-class BookingNotFoundError(BookingError):
-    """Exception when booking is not found"""
-    
+class BookingNotFoundError(BookingError):    
     def __init__(self, booking_id: Optional[int] = None, client_email: Optional[str] = None):
         if booking_id:
             message = f"Booking with ID {booking_id} not found"
@@ -99,9 +86,7 @@ class BookingNotFoundError(BookingError):
         )
 
 
-class InvalidTimezoneError(ValidationError):
-    """Exception for invalid timezone"""
-    
+class InvalidTimezoneError(ValidationError):    
     def __init__(self, timezone: str, valid_timezones: list):
         super().__init__(
             message=f"Invalid timezone '{timezone}'. Valid timezones: {', '.join(valid_timezones)}",
@@ -112,9 +97,7 @@ class InvalidTimezoneError(ValidationError):
         )
 
 
-class DatabaseError(BookingError):
-    """Exception for database-related errors"""
-    
+class DatabaseError(BookingError):    
     def __init__(self, message: str, operation: Optional[str] = None):
         super().__init__(
             message=f"Database error: {message}",

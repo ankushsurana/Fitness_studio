@@ -1,6 +1,6 @@
 import re
 from datetime import datetime, timedelta
-from typing import Optional, List, Dict, Any
+from typing import Optional, Dict, Any
 from email_validator import validate_email, EmailNotValidError
 from bson import ObjectId
 
@@ -9,9 +9,7 @@ from app.config.settings import get_settings
 
 settings = get_settings()
 
-
 class EmailValidator:
-    
     @staticmethod
     def validate(email: str) -> str:
         if not email or not email.strip():
@@ -33,11 +31,9 @@ class EmailValidator:
 
 
 class NameValidator:
-    
     NAME_PATTERN = re.compile(r"^[a-zA-Z\s\-'\.]+$")
     MIN_LENGTH = 2
     MAX_LENGTH = 100
-    
     @staticmethod
     def validate(name: str) -> str:
         if not name or not name.strip():
@@ -69,7 +65,6 @@ class NameValidator:
 
 
 class DateTimeValidator:
-    
     @staticmethod
     def validate_future_datetime(dt: datetime, min_advance_hours: int = None) -> None:
         if min_advance_hours is None:
@@ -117,9 +112,7 @@ class DateTimeValidator:
         
         return dt
 
-
 class ClassValidator:
-    
     @staticmethod
     def validate_class_data(
         name: str,
@@ -172,9 +165,7 @@ class ClassValidator:
             'description': description.strip() if description else None
         }
 
-
 class BookingValidator:
-    
     @staticmethod
     def validate_booking_request(
         class_id: str,
@@ -183,7 +174,6 @@ class BookingValidator:
     ) -> Dict[str, Any]:
         errors = {}
 
-        # Accept string ObjectId for MongoDB
         if not class_id or not ObjectId.is_valid(str(class_id)):
             errors['class_id'] = "Class ID must be a valid MongoDB ObjectId string"
 
@@ -208,7 +198,6 @@ class BookingValidator:
 
 
 class TimezoneValidator:
-    
     @staticmethod
     def validate(timezone_name: str) -> str:
         if not timezone_name or not timezone_name.strip():
@@ -233,49 +222,3 @@ class TimezoneValidator:
         except ValidationError:
             return False
 
-
-class PaginationValidator:
-    
-    MAX_LIMIT = 100
-    DEFAULT_LIMIT = 20
-    
-    @staticmethod
-    def validate_pagination(page: int = 1, limit: int = DEFAULT_LIMIT) -> Dict[str, int]:
-        errors = {}
-        
-        if not isinstance(page, int) or page < 1:
-            errors['page'] = "Page must be a positive integer"
-        
-        if not isinstance(limit, int) or limit < 1:
-            errors['limit'] = "Limit must be a positive integer"
-        elif limit > PaginationValidator.MAX_LIMIT:
-            errors['limit'] = f"Limit must not exceed {PaginationValidator.MAX_LIMIT}"
-        
-        if errors:
-            raise ValidationError("Pagination validation failed", details=errors)
-        
-        return {
-            'page': page,
-            'limit': limit,
-            'offset': (page - 1) * limit
-        }
-
-    @staticmethod
-    def validate_limit_offset(limit: int, offset: int) -> Dict[str, int]:
-        errors = {}
-
-        if not isinstance(limit, int) or limit < 1:
-            errors['limit'] = "Limit must be a positive integer"
-        elif limit > PaginationValidator.MAX_LIMIT:
-            errors['limit'] = f"Limit must not exceed {PaginationValidator.MAX_LIMIT}"
-
-        if not isinstance(offset, int) or offset < 0:
-            errors['offset'] = "Offset must be a non-negative integer"
-
-        if errors:
-            raise ValidationError("Pagination validation failed", details=errors)
-
-        return {
-            'limit': limit,
-            'offset': offset
-        }

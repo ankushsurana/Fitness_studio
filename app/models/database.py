@@ -14,12 +14,6 @@ settings = get_settings()
 
 _local = threading.local()
 
-# def get_db_connection() -> Database:
-    # if not hasattr(_local, 'client'):
-        # _local.client = MongoClient(settings.MONGO_URL)
-        # _local.db = _local.client[settings.MONGO_DB_NAME]
-    # return _local.db
-
 def get_db_connection() -> Database:
     if not hasattr(_local, 'client'):
         try:
@@ -89,7 +83,7 @@ def _insert_sample_data(db: Database):
             {
                 'name': 'Morning Yoga',
                 'instructor': 'Sarah Johnson',
-                'datetime_ist': datetime(2025, 6, 5, 7, 0, 0),
+                'datetime_ist': datetime(2025, 6, 10, 7, 0, 0),
                 'duration_minutes': 60,
                 'total_slots': 20,
                 'available_slots': 20,
@@ -100,7 +94,7 @@ def _insert_sample_data(db: Database):
             {
                 'name': 'High-Intensity HIIT',
                 'instructor': 'Mark Davis',
-                'datetime_ist': datetime(2025, 6, 5, 18, 0, 0),
+                'datetime_ist': datetime(2025, 6, 10, 18, 0, 0),
                 'duration_minutes': 45,
                 'total_slots': 15,
                 'available_slots': 15,
@@ -122,7 +116,7 @@ def _insert_sample_data(db: Database):
             {
                 'name': 'Evening Yoga',
                 'instructor': 'Sarah Johnson',
-                'datetime_ist': datetime(2025, 6, 6, 20, 0, 0),
+                'datetime_ist': datetime(2025, 6, 5, 20, 0, 0),
                 'duration_minutes': 75,
                 'total_slots': 18,
                 'available_slots': 18,
@@ -133,7 +127,7 @@ def _insert_sample_data(db: Database):
             {
                 'name': 'Power HIIT',
                 'instructor': 'Mike Thompson',
-                'datetime_ist': datetime(2025, 6, 7, 6, 30, 0),
+                'datetime_ist': datetime(2025, 6, 13, 6, 30, 0),
                 'duration_minutes': 45,
                 'total_slots': 12,
                 'available_slots': 12,
@@ -144,7 +138,7 @@ def _insert_sample_data(db: Database):
             {
                 'name': 'Beginner Yoga',
                 'instructor': 'Lisa Wang',
-                'datetime_ist': datetime(2025, 6, 7, 10, 0, 0),
+                'datetime_ist': datetime(2025, 6, 15, 10, 0, 0),
                 'duration_minutes': 60,
                 'total_slots': 20,
                 'available_slots': 20,

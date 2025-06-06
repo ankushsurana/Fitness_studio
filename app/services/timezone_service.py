@@ -9,7 +9,6 @@ from app.utils.exceptions import InvalidTimezoneError
 logger = logging.getLogger(__name__)
 settings = get_settings()
 
-
 class TimezoneService:
     
     def __init__(self):

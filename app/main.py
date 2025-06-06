@@ -1,8 +1,7 @@
 
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-import uvicorn
 from contextlib import asynccontextmanager
 import logging
 
@@ -18,20 +17,14 @@ logger = logging.getLogger(__name__)
 
 settings = get_settings()
 
-
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Application lifespan manager"""
-    # Startup
     logger.info("Starting Fitness Studio Booking API...")
     init_db()
     logger.info("Database initialized successfully")
     yield
-    # Shutdown
     logger.info("Shutting down Fitness Studio Booking API...")
 
-
-# Create FastAPI application
 app = FastAPI(
     title="Fitness Studio Booking API",
     description="A comprehensive API for managing fitness class bookings",
@@ -39,17 +32,14 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Configure appropriately for production
-    allow_credentials=True,
+    allow_origins=["*"], 
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 
-# Global exception handlers
 @app.exception_handler(BookingError)
 async def booking_error_handler(request: Request, exc: BookingError):
     """Handle booking-related errors"""
@@ -77,7 +67,6 @@ async def validation_error_handler(request: Request, exc: ValidationError):
         }
     )
 
-
 @app.exception_handler(Exception)
 async def general_exception_handler(request: Request, exc: Exception):
     """Handle unexpected errors"""
@@ -90,8 +79,6 @@ async def general_exception_handler(request: Request, exc: Exception):
         }
     )
 
-
-# Include routers
 app.include_router(classes_router, prefix="/api", tags=["Classes"])
 app.include_router(bookings_router, prefix="/api", tags=["Bookings"])
 
@@ -114,9 +101,7 @@ async def root():
 async def health_check():
     """Health check endpoint"""
     try:
-        # Test database connection
         db = next(get_db())
-        # The ismaster command is cheap and does not require auth.
         db.command('ismaster')
         return {
             "status": "healthy",

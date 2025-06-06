@@ -5,10 +5,8 @@ import logging
 
 from app.models.schemas import ClassResponse
 from app.repositories.class_repository import ClassRepository
-from app.utils.exceptions import (
-    ValidationError, ClassNotFoundError, DatabaseError,
-)
-from app.utils.validators import TimezoneValidator, PaginationValidator
+from app.utils.exceptions import ClassNotFoundError
+from app.utils.validators import TimezoneValidator
 from app.config.settings import get_settings
 
 logger = logging.getLogger(__name__)

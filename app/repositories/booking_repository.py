@@ -14,7 +14,7 @@ settings = get_settings()
 class BookingRepository:
     def __init__(self):
         self.db = get_db_connection()
-        self.collection = self.db['bookings']  # Fixed: was self.bookings_collection
+        self.collection = self.db['bookings']
 
     def create_booking(self, booking: Booking) -> Booking:
         try:
@@ -27,7 +27,7 @@ class BookingRepository:
             doc = {
                 "class_id": class_object_id,
                 "client_name": booking.client_name.strip(),
-                "client_email": booking.client_email.strip(),  # Normalize email
+                "client_email": booking.client_email.strip(),
                 "booking_time": booking.booking_time or datetime.utcnow(),
                 "status": booking.status,
                 "created_at": booking.created_at or datetime.utcnow(),
@@ -58,7 +58,7 @@ class BookingRepository:
                 },
                 {'$unwind': {'path': '$class_info', 'preserveNullAndEmptyArrays': True}}
             ]
-            result = list(self.collection.aggregate(pipeline))  # Fixed: was self.bookings_collection
+            result = list(self.collection.aggregate(pipeline))
             if not result:
                 return None
             return self._doc_to_entity(result[0])
@@ -68,7 +68,7 @@ class BookingRepository:
     
     def get_bookings_by_email(self, client_email: str, include_cancelled: bool = False) -> List[Booking]:
         try:
-            query = {"client_email": client_email.lower()}  # Normalize email
+            query = {"client_email": client_email.lower()}
             if not include_cancelled:
                 query["status"] = {"$ne": "cancelled"}
             
@@ -138,7 +138,7 @@ class BookingRepository:
             if not ObjectId.is_valid(class_id):
                 return 0
             
-            count = self.collection.count_documents({  # Fixed: was self.bookings_collection
+            count = self.collection.count_documents({
                 'class_id': ObjectId(class_id),
                 'status': 'confirmed'
             })
@@ -153,7 +153,7 @@ class BookingRepository:
                 return False
             existing = self.collection.find_one({
                 'class_id': ObjectId(class_id),
-                'client_email': client_email.lower(),  # Normalize email
+                'client_email': client_email.lower(),
                 'status': 'confirmed'
             })
             

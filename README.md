@@ -1,6 +1,6 @@
 # Fitness Studio Booking API
 
-A robust, production-ready FastAPI backend for managing fitness class schedules and bookings, using MongoDB Atlas for persistent storage.
+A robust FastAPI backend for managing fitness class schedules and bookings, using MongoDB Atlas for persistent storage.
 
 ## Features
 - **View Classes:** List all upcoming fitness classes (Yoga, Zumba, HIIT, etc.) with instructor, time, and available slots.
@@ -18,7 +18,6 @@ A robust, production-ready FastAPI backend for managing fitness class schedules 
 - **MongoDB Atlas** (via `pymongo`)
 - **Pydantic** for data validation
 - **Uvicorn** for ASGI server
-- **Pytest** for testing
 
 ## API Endpoints
 
@@ -56,11 +55,6 @@ python run.py
 - The API will be available at [http://localhost:8000](http://localhost:8000)
 - Interactive docs: [http://localhost:8000/docs](http://localhost:8000/docs)
 
-### 5. Run Tests
-```sh
-pytest
-```
-
 ## Example Booking Request
 ```json
 POST /api/book
@@ -84,14 +78,3 @@ run.py           # Application entry point
 requirements.txt # Dependencies
 .env             # Environment variables (not committed)
 ```
-
-## Deployment
-- Designed for cloud deployment (e.g., Heroku, Azure, AWS, etc.)
-- Use a production MongoDB Atlas cluster
-- Set all secrets and environment variables securely
-
-## License
-MIT
-
----
-**Author:** Ankush (2025)
